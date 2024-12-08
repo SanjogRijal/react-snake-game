@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import styles from "./index.module.css";
 import { drawFood, drawSnake } from "@/utils";
-import { useDeviceType } from "@/hooks/useDeviceType";
+// import { useDeviceType } from "@/hooks/useDeviceType";
 
 export default function GameSubComponents({
   score,
@@ -23,7 +23,7 @@ export default function GameSubComponents({
     y: 50,
   });
   const [direction, setDirection] = useState<string | null>(null);
-  const isMobile = useDeviceType();
+  // const isMobile = useDeviceType();
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -157,7 +157,7 @@ export default function GameSubComponents({
         height={300}
         className={styles.snakeGameCanvas}
       />
-      {isMobile && (
+      {
         <div className="flex justify-center mt-4 space-x-4">
           <button
             className="control-button"
@@ -186,7 +186,7 @@ export default function GameSubComponents({
             ↓
           </button>
         </div>
-      )}
+      }
     </div>
   );
 }
