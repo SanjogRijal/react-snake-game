@@ -72,11 +72,30 @@ export default function GameSubComponents({
     };
 
     const drawFood = () => {
-      context?.beginPath();
-      (context as any)?.rect(food.x, food.y, 16, 16);
-      if (context) (context as any).fillStyle = "red";
-      context?.fill();
-      context?.closePath();
+      if (context) {
+        context.beginPath();
+        context.arc(food.x + 8, food.y + 8, 8, 0, Math.PI * 2);
+        context.fillStyle = "#00a860";
+        context.fill();
+        context.closePath();
+
+        context.beginPath();
+        context.arc(food.x + 8, food.y + 8, 6, 0, Math.PI * 2);
+        context.fillStyle = "#ff7184";
+        context.fill();
+        context.closePath();
+
+        for (let i = 0; i < 6; i++) {
+          const angle = (i * Math.PI) / 3;
+          const seedX = food.x + 8 + Math.cos(angle) * 4;
+          const seedY = food.y + 8 + Math.sin(angle) * 4;
+          context.beginPath();
+          context.arc(seedX, seedY, 1, 0, Math.PI * 2);
+          context.fillStyle = "#ffffff";
+          context.fill();
+          context.closePath();
+        }
+      }
     };
 
     const interval = setInterval(() => {
