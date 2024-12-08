@@ -38,7 +38,7 @@ export default function GameComponent() {
     if (isMobile) {
       window.addEventListener("click", handleTap);
     }
-  }, [gameOver]);
+  }, [gameOver, isMobile]);
   return (
     <div className="flex flex-col items-center justify-center p-4">
       <ScoreComponent score={score} highScore={highScore} />
