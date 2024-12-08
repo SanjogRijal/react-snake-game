@@ -1,40 +1,42 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app).
+# Snake Game
 
-## Getting Started
+This is a classic **Snake Game** developed by **Sanjog Rijal** using **Next.js** and the **HTML5 Canvas**. The game offers a simple, yet fun experience of controlling a snake that grows in size as it eats food while avoiding collisions with the walls and itself.
 
-First, run the development server:
+## Table of Contents
+- [Demo](#demo)
+- [Features](#features)
+- [Technologies Used](#technologies-used)
+- [Installation](#installation)
+- [Gameplay](#gameplay)
+- [Development](#development)
+- [Contributing](#contributing)
+- [License](#license)
+
+## Demo
+
+You can try out the Snake game here:  
+**[Link to the demo](#)** (Insert the link to the hosted version of the game if available)
+
+## Features
+
+- Classic Snake gameplay with a growing snake.
+- Smooth and responsive controls using keyboard arrow keys or WASD keys.
+- Random food generation to increase snake length.
+- Game-over detection when the snake collides with the walls or itself.
+- Score tracking with a simple scoreboard.
+
+## Technologies Used
+
+- **Next.js**: A React-based framework for building server-rendered or statically exported web applications.
+- **HTML5 Canvas**: Used for rendering the game visuals and animating the snake and food.
+- **JavaScript (ES6)**: Core language for game logic and interactivity.
+
+## Installation
+
+Follow these steps to run the Snake Game locally:
+
+### Prerequisites
+- **Node.js** (v14 or higher) installed on your machine. You can check if you have Node.js installed by running:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
-
-[API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) instead of React pages.
-
-This project uses [`next/font`](https://nextjs.org/docs/pages/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn-pages-router) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/pages/building-your-application/deploying) for more details.
+node -v
