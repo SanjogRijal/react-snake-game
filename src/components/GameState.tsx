@@ -31,7 +31,7 @@ export default function GameComponent() {
   }, [gameOver]);
   return (
     <div>
-      <ScoreComponent score={score} />
+      <ScoreComponent score={score} highScore={highScore} />
       {gameOver && (
         <div>
           <p>
