@@ -159,32 +159,32 @@ export default function GameSubComponents({
         className={styles.snakeGameCanvas}
       />
       {isMobile && (
-        <div className="flex justify-center mt-4 space-x-4">
+        <div className="flex justify-center mt-6 space-x-4">
           <button
-            className="control-button"
-            onClick={() => handleTouchControl("up")}
+            className="control-button text-3xl mt-20 w-16 h-16 border-2 border-gray-400 bg-white text-gray-800 font-bold rounded-sm hover:bg-gray-100 focus:outline-none"
+            onClick={() => handleTouchControl("left")}
           >
-            ↑
+            ←
           </button>
           <div className="flex flex-col space-y-4">
             <button
-              className="control-button"
-              onClick={() => handleTouchControl("left")}
+              className="control-button text-3xl w-16 h-16 border-2 border-gray-400 bg-white text-gray-800 font-bold rounded-sm hover:bg-gray-100 focus:outline-none"
+              onClick={() => handleTouchControl("up")}
             >
-              ←
+              ↑
             </button>
             <button
-              className="control-button"
-              onClick={() => handleTouchControl("right")}
+              className="control-button text-3xl w-16 h-16 border-2 border-gray-400 bg-white text-gray-800 font-bold rounded-sm hover:bg-gray-100 focus:outline-none"
+              onClick={() => handleTouchControl("down")}
             >
-              →
+              ↓
             </button>
           </div>
           <button
-            className="control-button"
-            onClick={() => handleTouchControl("down")}
+            className="control-button text-3xl w-16 mt-20 h-16 border-2 border-gray-400 bg-white text-gray-800 font-bold rounded-sm hover:bg-gray-100 focus:outline-none"
+            onClick={() => handleTouchControl("right")}
           >
-            ↓
+            →
           </button>
         </div>
       )}

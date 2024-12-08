@@ -1,4 +1,5 @@
 import GameComponent from "@/components/GameComponent";
+import { useDeviceType } from "@/hooks/useDeviceType";
 import localFont from "next/font/local";
 
 const geistSans = localFont({
@@ -13,20 +14,31 @@ const geistMono = localFont({
 });
 
 export default function Home() {
+  const isMobile = useDeviceType();
   return (
     <div
-      className={`${geistSans.variable} ${geistMono.variable} grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]`}
+      className={`${geistSans.variable} ${geistMono.variable} ${
+        !isMobile &&
+        "grid grid-rows-[1fr_auto_50px] items-center justify-items-center min-h-[100vh] p-8 pb-16 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)] text-white bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 bg-cover bg-center"
+      } grid grid-rows-[1fr_auto_50px] items-center justify-items-center min-h-[100vh] p-8 pb-16 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]`}
     >
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <h1>Snake Game - Developed By Sanjog Rijal</h1>
-        <p>
-          Press arrow keys to control the snake.
-          <br />
-          Rule: Do not collide to the walls or overlap the snake.
+      <main className="flex flex-col items-center justify-center gap-8 row-start-1 text-center sm:text-left">
+        <h1 className="text-3xl sm:text-5xl font-semibold leading-tight tracking-wide">
+          Snake Game
+        </h1>
+        <p className="text-base sm:text-lg text-opacity-80">
+          Press the arrow keys to control the snake. <br />
+          <span className="font-bold">Rule:</span> Do not collide with the walls
+          or overlap the snake.
         </p>
-        <GameComponent />
+        <div className="w-full sm:w-[600px]">
+          <GameComponent />
+        </div>
       </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center"></footer>
+
+      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center text-sm sm:text-base">
+        <p>Designed and built with ❤️ by Sanjog Rijal</p>
+      </footer>
     </div>
   );
 }
