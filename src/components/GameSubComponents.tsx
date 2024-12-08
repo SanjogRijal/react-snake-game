@@ -1,6 +1,7 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useRef, useState } from "react";
 import styles from "./index.module.css";
+import { drawFood, drawSnake } from "@/utils";
+import { useDeviceType } from "@/hooks/useDeviceType";
 
 export default function GameSubComponents({
   score,
@@ -21,87 +22,17 @@ export default function GameSubComponents({
     x: 180,
     y: 50,
   });
-
   const [direction, setDirection] = useState<string | null>(null);
+  const isMobile = useDeviceType();
 
   useEffect(() => {
     const canvas = canvasRef.current;
     const context = canvas?.getContext("2d");
 
-    const drawSnake = () => {
-      const gradientColors = [
-        "#FF5733",
-        "#FFC300",
-        "#DAF7A6",
-        "#33FF57",
-        "#33D4FF",
-        "#6F33FF",
-      ];
-      const colorCount = gradientColors.length;
-
-      snake.forEach((segment, index) => {
-        if (context) {
-          context.beginPath();
-          const gradient = context.createRadialGradient(
-            segment.x + 8,
-            segment.y + 8,
-            2,
-            segment.x + 8,
-            segment.y + 8,
-            8
-          );
-          gradient.addColorStop(0, gradientColors[index % colorCount]);
-          gradient.addColorStop(1, gradientColors[(index + 1) % colorCount]);
-
-          context.fillStyle = gradient;
-          const radius = index === 0 ? 12 : 8;
-          context.arc(segment.x + 8, segment.y + 8, radius, 0, Math.PI * 2);
-          context.fill();
-          context.closePath();
-
-          if (index === 0) {
-            context.beginPath();
-            context.fillStyle = "white";
-            context.arc(segment.x + 4, segment.y + 6, 2, 0, Math.PI * 2);
-            context.arc(segment.x + 12, segment.y + 6, 2, 0, Math.PI * 2);
-            context.fill();
-            context.closePath();
-          }
-        }
-      });
-    };
-
-    const drawFood = () => {
-      if (context) {
-        context.beginPath();
-        context.arc(food.x + 8, food.y + 8, 8, 0, Math.PI * 2);
-        context.fillStyle = "#00a860";
-        context.fill();
-        context.closePath();
-
-        context.beginPath();
-        context.arc(food.x + 8, food.y + 8, 6, 0, Math.PI * 2);
-        context.fillStyle = "#ff7184";
-        context.fill();
-        context.closePath();
-
-        for (let i = 0; i < 6; i++) {
-          const angle = (i * Math.PI) / 3;
-          const seedX = food.x + 8 + Math.cos(angle) * 4;
-          const seedY = food.y + 8 + Math.sin(angle) * 4;
-          context.beginPath();
-          context.arc(seedX, seedY, 1, 0, Math.PI * 2);
-          context.fillStyle = "#ffffff";
-          context.fill();
-          context.closePath();
-        }
-      }
-    };
-
     const interval = setInterval(() => {
       (context as any)?.clearRect(0, 0, canvas?.width, canvas?.height);
-      drawSnake();
-      drawFood();
+      drawFood(context, food);
+      drawSnake(context, snake);
       moveSnake();
     }, 100);
 
@@ -141,6 +72,7 @@ export default function GameSubComponents({
         });
       }
     };
+
     const handleCollisionWithFood = (newSnake: any[]) => {
       const head = newSnake[0];
       if (head.x === food.x && head.y === food.y) {
@@ -165,7 +97,7 @@ export default function GameSubComponents({
     const handleWallCollision = (head: any) => {
       if (
         head.x + SNAKE_SPEED > (canvas as HTMLCanvasElement).width ||
-        head.x + SNAKE_SPEED < 0
+        head.x < 0
       ) {
         onGameOver("wall");
       }
@@ -186,7 +118,7 @@ export default function GameSubComponents({
       }
     };
 
-    const handleKeyPressed = (e: any) => {
+    const handleKeyPressed = (e: KeyboardEvent) => {
       switch (e.key) {
         case "ArrowRight":
           setDirection("right");
@@ -209,8 +141,14 @@ export default function GameSubComponents({
 
     return () => {
       clearInterval(interval);
+      window.removeEventListener("keydown", handleKeyPressed);
     };
   });
+
+  const handleTouchControl = (newDirection: string) => {
+    setDirection(newDirection);
+  };
+
   return (
     <div>
       <canvas
@@ -219,6 +157,36 @@ export default function GameSubComponents({
         height={300}
         className={styles.snakeGameCanvas}
       />
+      {isMobile && (
+        <div className="flex justify-center mt-4 space-x-4">
+          <button
+            className="control-button"
+            onClick={() => handleTouchControl("up")}
+          >
+            ↑
+          </button>
+          <div className="flex flex-col space-y-4">
+            <button
+              className="control-button"
+              onClick={() => handleTouchControl("left")}
+            >
+              ←
+            </button>
+            <button
+              className="control-button"
+              onClick={() => handleTouchControl("right")}
+            >
+              →
+            </button>
+          </div>
+          <button
+            className="control-button"
+            onClick={() => handleTouchControl("down")}
+          >
+            ↓
+          </button>
+        </div>
+      )}
     </div>
   );
 }
