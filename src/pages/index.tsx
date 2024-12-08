@@ -1,4 +1,4 @@
-import GameComponent from "@/components/GameState";
+import GameComponent from "@/components/GameComponent";
 import localFont from "next/font/local";
 
 const geistSans = localFont({
