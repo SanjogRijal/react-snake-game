@@ -29,13 +29,44 @@ export default function GameSubComponents({
     const context = canvas?.getContext("2d");
 
     const drawSnake = () => {
-      snake.forEach((value) => {
+      const gradientColors = [
+        "#FF5733",
+        "#FFC300",
+        "#DAF7A6",
+        "#33FF57",
+        "#33D4FF",
+        "#6F33FF",
+      ];
+      const colorCount = gradientColors.length;
+
+      snake.forEach((segment, index) => {
         if (context) {
-          context?.beginPath();
-          (context as any)?.rect(value.x, value.y, 16, 16);
-          if (context) (context as any).fillStyle = "green";
-          context?.fill();
-          context?.closePath();
+          context.beginPath();
+          const gradient = context.createRadialGradient(
+            segment.x + 8,
+            segment.y + 8,
+            2,
+            segment.x + 8,
+            segment.y + 8,
+            8
+          );
+          gradient.addColorStop(0, gradientColors[index % colorCount]);
+          gradient.addColorStop(1, gradientColors[(index + 1) % colorCount]);
+
+          context.fillStyle = gradient;
+          const radius = index === 0 ? 12 : 8;
+          context.arc(segment.x + 8, segment.y + 8, radius, 0, Math.PI * 2);
+          context.fill();
+          context.closePath();
+
+          if (index === 0) {
+            context.beginPath();
+            context.fillStyle = "white";
+            context.arc(segment.x + 4, segment.y + 6, 2, 0, Math.PI * 2);
+            context.arc(segment.x + 12, segment.y + 6, 2, 0, Math.PI * 2);
+            context.fill();
+            context.closePath();
+          }
         }
       });
     };
@@ -59,8 +90,7 @@ export default function GameSubComponents({
       if (direction) {
         setSnake((prevSnake: any) => {
           const newSnake = [...prevSnake];
-          const head = { x: newSnake[0].x, y: newSnake[0].y };
-
+          const head = { ...newSnake[0] };
           for (let i = newSnake.length - 1; i > 0; i--) {
             newSnake[i].x = newSnake[i - 1].x;
             newSnake[i].y = newSnake[i - 1].y;
