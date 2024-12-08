@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import ScoreComponent from "./Score";
 import GameSubComponents from "./GameSubComponents";
+import { useDeviceType } from "@/hooks/useDeviceType";
 // import { useDeviceType } from "@/hooks/useDeviceType";
 
 export default function GameComponent() {
@@ -8,7 +9,7 @@ export default function GameComponent() {
   const [highScore, setHighScore] = useState(0);
   const [gameOver, setGameOver] = useState(false);
   const [collisionType, setCollisionType] = useState("");
-  // const isMobile = useDeviceType();
+  const isMobile = useDeviceType();
   const handleGameOver = (type: string) => {
     setGameOver(true);
 
@@ -34,9 +35,9 @@ export default function GameComponent() {
       }
     };
     window.addEventListener("keydown", handleKeyPressed);
-    // if (isMobile) {
-    window.addEventListener("click", handleTap);
-    // }
+    if (isMobile) {
+      window.addEventListener("click", handleTap);
+    }
   }, [gameOver]);
   return (
     <div className="flex flex-col items-center justify-center p-4">
