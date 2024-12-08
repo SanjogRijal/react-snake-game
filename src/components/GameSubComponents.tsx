@@ -24,6 +24,7 @@ export default function GameSubComponents({
   });
   const [direction, setDirection] = useState<string | null>(null);
   const isMobile = useDeviceType();
+  const touchStartRef = useRef({ x: 0, y: 0 });
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -137,17 +138,48 @@ export default function GameSubComponents({
       }
     };
 
+    const handleTouchStart = (e: TouchEvent) => {
+      touchStartRef.current = {
+        x: e.touches[0].clientX,
+        y: e.touches[0].clientY,
+      };
+    };
+
+    const handleTouchEnd = (e: TouchEvent) => {
+      const deltaX = e.changedTouches[0].clientX - touchStartRef.current.x;
+      const deltaY = e.changedTouches[0].clientY - touchStartRef.current.y;
+
+      if (Math.abs(deltaX) > Math.abs(deltaY)) {
+        if (deltaX > 0) {
+          setDirection("right");
+        } else {
+          setDirection("left");
+        }
+      } else {
+        if (deltaY > 0) {
+          setDirection("down");
+        } else {
+          setDirection("up");
+        }
+      }
+    };
+
     window.addEventListener("keydown", handleKeyPressed);
+
+    if (isMobile) {
+      window.addEventListener("touchstart", handleTouchStart);
+      window.addEventListener("touchend", handleTouchEnd);
+    }
 
     return () => {
       clearInterval(interval);
       window.removeEventListener("keydown", handleKeyPressed);
+      if (isMobile) {
+        window.removeEventListener("touchstart", handleTouchStart);
+        window.removeEventListener("touchend", handleTouchEnd);
+      }
     };
-  });
-
-  const handleTouchControl = (newDirection: string) => {
-    setDirection(newDirection);
-  };
+  }, [direction, isMobile]);
 
   return (
     <div>
@@ -157,36 +189,6 @@ export default function GameSubComponents({
         height={300}
         className={styles.snakeGameCanvas}
       />
-      {isMobile && (
-        <div className="flex justify-center mt-4 space-x-4">
-          <button
-            className="control-button"
-            onClick={() => handleTouchControl("up")}
-          >
-            ↑
-          </button>
-          <div className="flex flex-col space-y-4">
-            <button
-              className="control-button"
-              onClick={() => handleTouchControl("left")}
-            >
-              ←
-            </button>
-            <button
-              className="control-button"
-              onClick={() => handleTouchControl("right")}
-            >
-              →
-            </button>
-          </div>
-          <button
-            className="control-button"
-            onClick={() => handleTouchControl("down")}
-          >
-            ↓
-          </button>
-        </div>
-      )}
     </div>
   );
 }
