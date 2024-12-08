@@ -47,24 +47,27 @@ npm (comes with Node.js) for managing dependencies.
 Steps to Install and Run
 Clone the repository to your local machine:
 
+**Copy Code**
 ```bash
-Copy code
-git clone https://github.com/your-username/snake-game.git
-Navigate into the project directory:
+git clone https://github.com/your-username/snake-game.git```
+
+**Navigate into the project directory**
 
 ```bash
 Copy code
-cd snake-game
-Install the required dependencies:
+cd snake-game```
+
+**Install the required dependencies**:
 
 ```bash
 Copy code
-npm install
+npm install```
+
 Start the development server:
-
 ```bash
 Copy code
-npm run dev
+npm run dev```
+
 Open your browser and go to http://localhost:3000 to play the game!
 
 Gameplay
