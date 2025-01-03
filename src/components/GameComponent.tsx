@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import ScoreComponent from "./Score";
 import GameSubComponents from "./GameSubComponents";
 import { useDeviceType } from "@/hooks/useDeviceType";
-// import { useDeviceType } from "@/hooks/useDeviceType";
 
 export default function GameComponent() {
   const [score, setScore] = useState(0);
@@ -10,11 +9,12 @@ export default function GameComponent() {
   const [gameOver, setGameOver] = useState(false);
   const [collisionType, setCollisionType] = useState("");
   const isMobile = useDeviceType();
+
   const handleGameOver = (type: string) => {
     setGameOver(true);
 
     if (score > highScore) {
-      setHighScore(score);
+      setHighScore((prevHighScore) => Math.max(prevHighScore, score));
     }
     setCollisionType(type);
   };
@@ -23,6 +23,7 @@ export default function GameComponent() {
     setScore(0);
     setGameOver(false);
   };
+
   useEffect(() => {
     const handleKeyPressed = (e: { key: string }) => {
       if (gameOver && e.key === "Enter") {
@@ -34,13 +35,22 @@ export default function GameComponent() {
         handleResetGame();
       }
     };
+
     window.addEventListener("keydown", handleKeyPressed);
     if (isMobile) {
       window.addEventListener("click", handleTap);
     }
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyPressed);
+      if (isMobile) {
+        window.removeEventListener("click", handleTap);
+      }
+    };
   }, [gameOver, isMobile]);
+
   return (
-    <div className="flex flex-col items-center justify-center p-4">
+    <div className="flex flex-col items-center justify-center p-4 game-area">
       <ScoreComponent score={score} highScore={highScore} />
       {gameOver ? (
         <div className="flex flex-col items-center bg-red-500 text-white p-6 rounded-lg shadow-lg mt-8">
