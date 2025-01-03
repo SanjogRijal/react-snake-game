@@ -15,7 +15,7 @@ This is a classic **Snake Game** developed by **Sanjog Rijal** using **Next.js**
 ## Demo
 
 You can try out the Snake game here:  
-**[Link to the demo](#)** (Insert the link to the hosted version of the game if available)
+**[Link to the demo](https://react-snake-game-eight.vercel.app/)**
 
 ## Features
 
